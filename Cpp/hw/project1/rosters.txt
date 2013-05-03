@@ -1,0 +1,8 @@
+Calculus | 101 | 4 | Dr. Lindner
+Mike | Zappitello | Upper Freshman | 12 | 4.0 | 11/07/1986 | 09/30/2008 | 001
+Abby | Tabak | Lower Freshman | 8 | 3.9 | 03/06/1984 | 09/30/2008 | 002
+end_roster|
+
+Algebra | 202 | 4 | Dr. Iqubal
+Mike | Zappitello | Upper Freshman | 12 | 4.0 | 11/07/1986 | 09/30/2008 | 001
+end_roster|

@@ -1,0 +1,1372 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10660\viewh9780\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 30 August\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul \ulc0 Function\ulnone \
+bool isEven(int i)\{\
+	bool b = i % 2 == 0;\
+	return b;\
+\}\
+\
+type return is first, then name of function, input types closed in parens\
+\
+so for this function we have	int i -> 
+\b |
+\b0  isEven 
+\b |
+\b0  -> boolean\
+\
+\ul Comments\
+\ulnone /*Determines if the given int is even\
+*-int i: the int that is to be tested\
+*-return: true iff int i is even\
+*/\
+\
+\ul Void Return Type\
+\ulnone When we don't need a function to return anything we use the void return type\
+
+\b void 
+\b0 foo(int i)\{\
+\
+\ul Pass by copy (default)\
+\ulnone Consider the following example:\
+\
+main()\{\
+	int n = 5;\
+	foo(n);\
+	cout<<n;\
+\}\
+\
+void foo(int i)\{\
+	i = 6;\
+\}\
+\
+This is a pass by copy.  i is copied when it is passed to foo.  then, i is changed to 6 only in foo and not in main.\
+\
+\ul Pass by reference (&)\
+\ulnone pass references ("address info") of the arguments and work on the original data.  we use an ampersand to denote this\
+\
+void foo(int &i)\{\
+	i = 6;\
+\}\
+\
+this passes the address info of the int i in main.  now anything done inside of foo is acted on main as well.\
+\
+\ul Pass by constant reference (const)\
+\ulnone pass by reff but now changes are aloud.\
+\
+void printData(const int &i)\{\
+	cout<<i;\
+\}\
+\
+this function points directly to the int i, but won't allow it to be changed.\
+\
+\ul We can mix how these references are passed in any function\
+\ulnone void foo(int &i, char a, double &c)\
+\
+\ul Using a sharp include and namespaces\ulnone \
+#include <iostream>  enables the functionality to read and write in the console\
+\
+#include <iostream>\
+using namespace std;\
+main\{\
+	cout<<"Hello World";\
+\}\
+\
+OR\
+\
+#include <iostream>\
+main\{\
+	std::cout<<"Hello World";\
+\}\
+\
+we add the using namespace call to let the program know what set of predefined functions (std in this case) we are using.  if we don't use that line, each time we use a function from std, we have to prefix the function with std.\
+\
+
+\b 4 September\
+
+\b0 \
+\ul Arrays\
+\ulnone store elements with a notion of a specific order. \
+int a[6]; 	//declares a to be an array of six integers and reserves the\
+		//(continuous) space.\
+\
+a[0] = 3;\
+int b = a[0];\
+\
+int a[6] = \{1,2,3,4,5,6\};\
+[1|2|3|4|5|6] - the first element is stored at a.  the last a stored at a+i*sizeof(int)\
+\
+main()\{\
+	int a[6] = \{1,2,3,4,5,6\};\
+	foo(a,6);\
+\}\
+\
+void foo(int a[], int n)\{\
+	for(int i=0; i<n; i++)\{\
+		cout<<a[i]<<endl;\
+	\}\
+\}\
+\
+**remember, we are only passing in variables via copy.  we point to the first element and copy things after it as necessary.  we have no way of knowing its size.**\
+\
+\ul Multidimensional Arrays\ulnone \
+a two dimensional array corresponds to a matrix.\
+int a[3][2] = \{\
+	\{1,2\},\
+	\{3,4\},\
+	\{5,6\}\
+\};\
+\
+void foo(int a[][2], int n)\{		//we need to specify the size of the array in the first dimention so the foo knows how far to shift over to copy the next element\
+	for(int i=0; i<n; i++)\{\
+		for(int j=0; j<2; j++)\{\
+			cout<<a[i][j]<<' ';\
+		\}\
+	\}\
+\}\
+\
+
+\b 5 September
+\b0 \
+A program is made up of data types that rep the data and algorithm\
+c++ has some primitive data types (int, float, double, bool)\
+c++ has some aggregate data types - stores multiple pieces of primitive data types (array, structure)\
+\
+a problem - add to rational numbers (fractions)\
+1/2 + 2/3 = 3/6 + 4/6 = 7/6\
+\
+so how do we get the lcm for these two things?\
+lets look at the gcd for two numbers\
+\
+12 & 15 - lcm = 60, gcd = 3\
+\
+use that awesome euclidian algorithm\
+d|a and d|b then d|(a-b)\
+\
+if b == 0 then gcd(a,b) = a\
+gcd(a,b) = gcd(b, a%b)\
+\
+gcd(15, 12) = gcd(12, 3) = gcd(3, 0) = 3\
+\
+12  = 2^2 * 3^1 * 5^0\
+15  = 2^0 * 3^1 * 5^1\
+gcd= 2^0 * 3^1 * 5^0 = 3\
+lcm= 2^2 * 3^1 * 5^1 = 60\
+\
+12 * 15 = gcd(12, 15) * lcm(12, 15)\
+a * b = gcd(a, b) * lcm(a, b)\
+lcm(a, b) = (a * b) / gcd(a, b)\
+----------------------------------\
+\
+a / b = ra / rb\
+\
+\ul write 6 functions for monday\
+\ulnone void input(int a[])\
+void output(int a[])\
+void add(int a[], int b[], int aPlusB)\
+int lcm(int a, int b)\
+int gcd(int a, int b)\
+void reduce(int r[], int rr[])\
+\
+
+\b 10 September\
+
+\b0 Lets consider a bank account object, which has a string (your name), an int (your account number), and a double (your balance).\
+How can we store that as a single variable.  To do that we can't use an array, but we can use a structure!\
+\
+We use the key command struct and by convention, we name our new data type with a capital letter.\
+A variable of the strut type is called an object.\
+We use a "." as a member selection operator.\
+\
+	\
+struct BankAccount\{						//declares a new data type called BankAccount\
+	string name;\
+	int accNum;\
+	double balance;\
+\};\
+\
+void output(const BankAccount &acc)\{				//this function passes the account by a constant reference\
+	cout 	<< "name: " << acc.name << endln\
+		<< "acc num: " << acc.accNum << endln\
+		<< "balance: " << acc.balance << endln;\
+\}\
+\
+int main()\{\
+	BankAccount r;						//creates a new object named r of type BankAccount\
+	r.name = "joe";\
+	r.accNum = 1;\
+	r.balance = 100.00;\
+\
+	BankAccount r2;\
+	r2 = r;\
+\
+	BankAccount r3 = \{"Mike", 2, 200.00\};\
+\}\
+\
+structures can be passed into a function and passed out from a function.\
+\
+
+\b for next class, redo the rational numbers as structure rather than as an array\
+\
+12 Sept\
+
+\b0 c++ is an object oriented programming language\
+a program is an interaction of objects, and functions are a part of those objects\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\fs36 \cf0 4 characteristics of OOP\
+1)Data Abstraction - bundle together data in a larger data structure (a single entity)\
+2)Encapsulation - you can protect your data\
+3)Inheritance - what you get from your parents\
+4)Polymorphism - can have an object that can take on many different forms
+\fs24 \
+\
+struct Rat\{			//an example of data abstraction\
+	int num;\
+	int denom;\
+\}\
+\
+class Rat\{			//another example of data abstraction\
+	public:		//these examples are equivilent\
+	int num;		//public means that they can only be changed inside the class\
+	int denom;\
+\}\
+\
+Encapsulation\
+allows us to protect information inside of a class\
+	i.e. it can't be changed from the outside\
+	rat.num=3; won't work because its private\
+by default, a structure has a public encapsulation and the class has a private encapsulation\
+	to declare a variable private we use private:\
+	similarly, we use public:\
+\
+we can make the input and output functions part of the object\
+we use a :: as a scope resolution operator (just like a . is used to access members of an object)\
+class Rat\{\
+	private:\
+	int num;\
+	int denom;\
+\
+	public:\
+	void output();\
+	void input();\
+	Rat reduce();\
+\}\
+\
+Rat::output()\{\
+	cout << num << "/" << denom;\
+\}\
+\
+int main()\{\
+	Rat r;\
+	r.output();\
+\}\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 19 sept\
+
+\b0 accessors are the functions that access data in a structure or class - get functions\
+mutators are functions that change the data in a structure or class - set functions\
+\
+
+\b 24 sept\
+
+\b0 Constructor - creates an object (an instance) of a class\
+	it does not have a return type\
+	it has the same name as the class name\
+	can be overloaded\
+\
+class Rat\{				//we left a ton out of the class, but declaring the constructor is the important part\
+	public::\
+		Rat::Rat(int n, int d)		\
+\}\
+\
+Rat::Rat(int n, int d)\{\
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 	num = n;\
+	denom = d;\
+	\
+	if(denom==0)\{\
+		cout<<"Error"<<"\\n";\
+		exit(1);\
+	\}\
+	\
+	if(denom<0)\{\
+		denom = - denom;\
+		num = - num;\
+	\}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \}\
+\
+OOOOOORRRRR\
+\
+Rat::Rat(int n, int d): num(n), denom(d)\{\
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 	if(denom==0)\{\
+		cout<<"Error"<<"\\n";\
+		exit(1);\
+	\}\
+	\
+	if(denom<0)\{\
+		denom = - denom;\
+		num = - num;\
+	\}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \}\
+\
+Rat r(1,2);				//implicitly calls the constructor		an initialization\
+\
+r = Rat(3,5);				//explicitly calls the constructor		an assignment\
+\
+Rat r2 = Rat(5,6);			//explicitly calls the constructor		an initialization\
+\
+if we have a constructor without a parameter list, we have to be careful.\
+for example\
+	Rat r(); is read as a function declaration\
+		instead, we use Rat r;\
+\
+using an initialization list rather than a constructor.\
+	to do it, we use the syntax after the oooorrrrr\
+	if we don't use the initialization list, then we are initializing the interior objects, and then copying it over in an assignment\
+	if we use the initialization list, then we are using the initialization directly in our object\
+	we can initialize a constant, but we cannot assign them.\
+	when we are using a reference, we should also use an initialization list\
+\
+constant key word\
+\
+const int N=5;\
+const Rat R(1,2);\
+R.setNum(5);					//results in compiler error\
+R.getNum();						//results in compiler error\
+\
+Rat add(const Rat& r1, const Rat&r2)\{\
+	r1.getNum()					//results in compiler error\
+\}\
+\
+class Rat\{\
+	private:\
+		\'85\
+		\'85\
+	public:\
+		\'85\
+		\'85\
+		int getNum() const;			//tells the compiler that getNum() will not change the variables\
+\}\
+\
+
+\b 3 October\
+
+\b0 chapter 11- separate compilation\
+declaration - \
+	.h file\
+	tells us how the function work\
+\
+implementation\
+	.cpp file\
+	implements the functions\
+		as long as the functions work, you only need to know how to use it (which the methods tell us)\
+	\
+g++ does three things\
+1. preprocess - goes through and executes all the directives			done by g++ -E file.cpp\
+2. compile - takes a source file and makes an object file			done by g++ -c file.cpp\
+3. link - links with other object files to produce an executable		done by g++ file.cpp\
+\
+class Rat\{			//declaration 				put in Rat.h\
+\
+\};\
+\
+#include "Rat.h"\
+int main()\{			//use					main.cpp\
+\
+\}\
+\
+#include "Rat.h";\
+Rat:Rat()\{			//implementation definitions	put in Rat.cpp\
+\
+\}\
+\
+#include 		a directive that essentially copy and pastes a file in another one\
+#define 		a directive that allows us to define macros\
+				macro - substitute a name for several sets of instructions\
+#ifdef & #endif - 	a set of directives that includes the text between them if a macro is defined\
+#ifndef & #endif-	a set of directives that includes the text between them if a macro is not defined\
+	\
+\
+in the command line\
+a.	g++ -c Rat.cpp\
+		->results in Rat.o\
+b.	g++ -c main.cpp\
+		->results in main.o\
+c.	g++ Rat.o main.o\
+		->results in a.out\
+\
+we run into a problem when we are including a bunch of .h files in each other\
+	when they are put into main.cpp and we #include these  other files, we may be declaring the same .h files more than once\
+we get around this by using the following\
+	1. in the .h file, use inclusion protection .h file\
+		#ifndef DATE_H\
+		#define DATE_H\
+\
+		stuff in the .h file\
+\
+		#endif\
+	2. in the main.cpp file declare #include "file.h"\
+\
+
+\b 10 oct\
+
+\b0 in line functions and static members			//chapter 7.2\
+\
+in line functions - declare a class and declare a function and describe that function in the class\
+	must be done in a .h file, not a cpp file.\
+\
+class Rat\{\
+	private:\
+		int num;\
+		int denom;\
+	public:\
+		void output()\{\
+			cout<<num\
+				<<"\\"\
+				<<denom\
+				<<endln;\
+		\}\
+\}\
+\
+when we inline the function, the function is pasted directly in the executable\
+when we do not, the function in the executable is points to somewhere else\
+	advantages : 	speed\
+	disadvantage : 	violates encapsulation\
+				copying the function multiple times in the executable\
+inline functions are best used when working with small functions\
+\
+static members \
+instance field - an attribute of an object\
+class field - an attribute of a class\
+if a member is static it is an attribute of a class\
+	a static field exists regardless of whether an object of the class exists or not\
+\
+class BankAccount\{\
+	private:\
+		int acntno;\
+		string name;\
+		double balance;\
+		static double minBalance;		//this is an attribute of the entire class\
+	\
+	public:\
+		BankAccount(int accountNumber, string nm, double b):acntno(accountNumber), name(nm), balance(b)\{\
+\
+		\}\
+		...\
+\}\
+\
+double BankAccount::minBalance = 100;\
+\
+we can also declare static functions that work with static fields\
+\
+static double getMinBalance()\
+\{\
+	return minBalance;\
+\}\
+\
+int main()\{\
+	cout<<BankAccount::getMinBalance();\
+\}\
+\
+void BankAccount::output() const\{\
+	cout<<acntno<<endln;\
+	cout<<name<<endln;\
+	cout<<balance<<endln;\
+	cout<<minBalance;			//the output function can access instance members and other class members, so this is cool\
+\}\
+\
+
+\b 15 oct\
+
+\b0 pointers\
+variable is a memory location storing a certain type of data\
+	name\
+	type\
+	value\
+	size		(depends on the type)\
+	scope		where in the program a variable can be seen\
+	lifetime	the duration of the variable\
+		automatic - automatically created and destroyed\
+		dynamic- programmer created and destroyed (using new and delete)\
+		static variables start when the program starts and end when the program ends.\
+	address	where the variable lives on memory \
+		memory location number\
+	\
+a pointer is an address\
+	its a hex number\
+	its type pointer\
+	the & is the "address of operator"\
+		goes from the variable to the address\
+	the * is the "dereference operator"\
+		goes from the address to the variable\
+		to declare a pointer type, we use the * after the data type\
+		int* p;		//p is a pointer for an int\
+		double* p2;	//p2 is a pointer for a double\
+		int* p, p2;	//creates a pointer p and an int p2\
+		int *p, *p2;	//creates two int pointers p1, and p2\
+		int &r1 = n;	//creates an alias r1 of n;\
+		int &r1 = n, r2 = m;	//creates an alias r1 of n and a variable r2 with an assigned value of m\
+		int &r1 = n, &r2 = m;	//creates two aliases\
+	the & is the "address of operator"\
+		goes from the variable to the address\
+	the * is the "dereference operator"\
+		goes from the address to the variable\
+\
+int n = 5;\
+int m = n;\
+cout<<n<<m;		//prints out 55\
+n = 10;\
+cout<<n<<m;		//prints out 105\
+\
+int n = 5; \
+int& m = n;		//makes an alias \
+cout<<n<<m;		//prints out 55\
+n = 10;\
+cout<<n<<m		//prints out 1010\
+\
+this is what we are doing when we pass by reference\
+\
+
+\b 22 oct (good kid maad city)\
+
+\b0 int m=10;
+\b \
+
+\b0 int n=5;		//creates an int n\
+int* p = &n;		//creates an int pointer p that points to n\
+int* p2;		//creates an int pointer p2\
+p2=p;			//assigns p2 the same values as p\
+\
+int* p3 = &m;\
+*p3 = *p;		//assigns the value of n to the value of m\
+\
+pointers and dynamic memory\
+dynamic variable\
+int* p;			//creates pointer in the stack\
+p = new int;		//creates block of memory for an int in the heap\
+*p = 10;		//assigns a value of 10 to the memory in the heap (without ever naming it!)\
+\
+stack-> constant pool <-heap\
+the stack is the part that the program is using\
+the heap is where memory comes from\
+a program crashes when we run out of memory from the heap\
+\
+once we are done with our program, we need to deallocate memory using the delete operator\
+\
+delete p;		//deletes the memory and gives the memory back to the heap\
+return 0;\
+\
+a memory leak occurs when we do not deallocate memory back to the heap once we have used it\
+int main()\{\
+	int* p = new int;\
+	*p=10;\
+	int* p2 = new int;\
+	*p2=5;\
+\
+	return 0;\
+\}\
+\
+to fix this we want to include this before the turn\
+	delete p;\
+	delete p2;\
+\
+arrays are pointers.\
+\
+int a[5] = \{0, 5, 10, 15, 20\};		//a is a pointer that points to the first location in memory//a=&a[0]\
+int* p;					//creates a pointer\
+p=a;					//assigns the pointer a address to pointer p\
+for(int i=0; i<5; i++)\{\
+	cout<<p[i];\
+\}\
+\
+\
+we can add to pointers to shift them in memory, similar to an array\
+p+1; will move the address four bits down, the length of an int\
+\
+
+\b 24 oct lecture\
+
+\b0 int* p;
+\b \
+
+\b0 int a[10];	//creates an array of ints size 5\
+p = a;\
+	what is the difference between the array variable and the pointer variable?\
+		an array variable is a constant pointer, while the pointer can be changed\
+int* p;			//p can be changed\
+int* const p;		//p cannot be changed, but the contents can\
+const int* p;		//the pointer can be changed, but the contents that p points to are constant\
+const int* const p;	//neither the pointer nor the contents can be changed\
+\
+\
+//create an array and retrun the pointer\
+int* input();						//declare a new function\
+\
+int main()\{						//main method\
+	int* p = input();				//create dynamic array starting at p\
+\
+	cout<<"Output array\\n";			\
+\
+	for(int i=0; i<5; i++)\{				//print out the array\
+		cout << p[i] << "";\
+	\}\
+\
+	delete []p;					//deallocates the memory from the heap\
+	p = NULL;					//makes the point p point to nothing\
+\
+	return 0;\
+\}\
+\
+int* input()\{\
+	int* a = new int[5];				//creates a block of memory 5 ints long and returns pointer with address of first spot\
+	for(int i=0; i<5; i++)\{				//has user enter the value of the the int in the array\
+		cout<<"Input a[" << i << "\}\\n";\
+		cin>> a[i];\
+	\}\
+	return a;					//returns the start of our dynamic array\
+\}\
+\
+new example\
+int* p = new int(5);\
+cout<<*p;			//the value of the variable p points to\
+cout<<p;			//address that p points to\
+cout<<&p;			//address of the point p\
+\
+int** pp = &p;			//pp is a pointer to a pointer\
+cout<<&pp;			//the address of pp\
+\
+2-d array\
+int table[2][3];		//creates a 2 day array\
+int** t = new int*[2];		//creates an array of int pointers\
+for(int i=0; i<2; i++)\{\
+	t[i] = new int[3];	//creates an array of ints\
+\}\
+\
+for(int i=0; i<2; i++)\{		//for loop that deletes the arrays of ints\
+	delete [] t[i];\
+\}\
+delete [] t;			//deletes the array of pointers\
+\
+t[0][1]				//returns the value in the table\
+*((*t)+1)			//returns the same value\
+\
+t[1][2] is *(*(t+1)+2)\
+\
+
+\b 5 nov - hope & change pt 2 (eve)\
+
+\b0 chapter 8\
+\
+class Rat\{\
+	private:\
+		int num;\
+		int denom;\
+	public: \
+		...\
+		\'85\
+		\'85\
+\};\
+\
+cont Rat add(const Rat &r1, const Rat &r2)\{\};\
+\
+int main()\{\
+	Rat a(1,2);\
+	Rat b(2,3);\
+	Rat c;\
+	c = add(a,b);			\
+	add(a,b).output();		//cool because output is a const function\
+	add(a,b).input();		//not cool because input is not\
+	c.input();			//cool because c is not constant\
+\}\
+\
+the other option is to put const Rat add(const Rat& other)\{\} in the public part of the Rat class\
+	this gives the function access to all the private data\
+\
+what if we wanted to do c = a + b; ?\
+	we can overload the operators!\
+		-pretty fucking sweet\
+\
+the function declarations now look like this\
+	const Rat operator +(const Rat& other)\{\}\
+	or\
+	const Rat operator +(const Rat& r1, const Rat& r2)\{\}\
+in either case, we will say c = a+b\
+	not +(a,b) or a.+(b)		//thank god\
+\
+
+\b 12 nov
+\b0  \
+binary operators - take two inputs\
++, -, *, /, %\
+<, >, <=, >=, ==, !=\
+<<, >>\
+&&, ||\
+=, +=, -=, *=, /==\
+\
+unary operators\
+++, --\
+-, +\
+! \
+&, *\
+[], ()\
+., ::\
+\
+trinary operators\
+? :\
+\
+we cannot overload \
+., ::, or ? :\
+\
+we can but should not overload \
+&&, ||, and !\
+	they would loose the property of short circuited these operators\
+\
+can only be overloaded as members\
+	=, +=, -=, [], ()\
+\
+the rest can be overloaded as members and non members\
+\
+for the unary ++ and --, if its a post member operator, include a dummy int variable to indicate its post.\
+\
+Example 1\
+IntPair IntPair::operator++(int ignoreMe)		//postfix version\
+\{\
+	int temp 1 = first;\
+	int temp 2 = second;\
+	first++;\
+	second++;\
+	return(temp1, temp2);\
+\}\
+\
+intPair intPair::operator++()			//prefix version\
+\{\
+	first++;\
+	second++;\
+	return(first, second);\
+\}\
+\
+Example 2\
+We have an object of type CharPair.\
+	it has two values\
+		first = "a";\
+		second = "b";\
+p[1] will indicate the first element\
+p[2] will indicate the second\
+\
+so we can do\
+p[1] = 'z';		//this is called an l-value\
+p[2] = 'y';\
+char c;\
+c = p[1]		//this is called an r-value\
+\
+an l-value must be a variable\
+	overload must return a variable by reference\
+an r-value must evaluate to a value\
+	overload must return a value or by const reference\
+		const ref avoids duplicating the object\
+\
+Type& operator[](int index);			//this is an l value\
+const Type& operator[](int index) const;		//this is an r value\
+\
+
+\b 14 Nov\
+
+\b0 overloading the insertion operator (<<)\
+friend ostream& operator<<(ostream&, const Rat& r)\
+	make sure the output is the same as the stream we were using\
+	friend key word lets us put the function in the class without it being a member\
+\
+safe arrays\
+	this lets us fuck around with arrays in a safe way\
+	we can also create a length function\
+\
+#ifndef SAFE_ARRAY_H\
+#def SAFE_ARRAY_H\
+\
+class SafeArray\{\
+	private:\
+		int size;\
+		int* array;\
+\
+	public:\
+		SafeArray();\
+		SafeArray(int s);\
+		~SafeArray();			//destructor - executes when the program is out of scope\
+		int length() const;\
+		int& operator[](int index);\
+\};\
+#endif\
+\
+#include safeArray.h\
+#include <iostream>\
+\
+using namespace std;\
+\
+SafeArray::SafeArray() : size(0), array(NULL)\{\
+	//empty\
+\}\
+	\
+SafeArray::SafeArray(int s) : size(s)\{\
+	array = new int[size];\
+\}\
+\
+SafeArray::~SafeArray()\{				//the destructor\
+	if(array!=NULL)\{\
+		delete [] array;\
+		array = NULL;\
+	\}\
+\}\
+\
+int SafeArray::length() const\{\
+	return size;\
+\}\
+\
+int& SafeArray::operator [] (int index)\{\
+	if(index<0 || index > size)\{\
+		cout <<"index: " << index\
+		         <<" is out of bounds."\
+		         << endl;\
+		exit(1)\
+	\}\
+	return array[index];\
+\}\
+\
+
+\b 19 nov cl\'e9 h\'e8re i comme
+\b0 \
+Destructor - piece of code that gets executed when the object gets destroyed\
+	destructor is always public\
+\
+if we copy a dynamic array into another function, we don't want to destroy the array when we leave the function\
+\
+shallow copy\
+	copies the pointer to the beginning and not the data it contains\
+deep copy\
+	copies the data the array contains and puts it in a new location\
+\
+SafeArray::SafeArray(const SafeArray& other)\{\
+	size = other.size;\
+	array = new int[size];\
+	for(int i=0; i<size; i++)\{\
+		array[i] = other.array[i];\
+	\}\
+\}\
+\
+also want to override the assignment operator\
+	it isn't the same as the copy constructor, because the object being copied onto might already exist, causing a memory leak\
+	so we mimic the destructor, and then evoke the copy constructor\
+	we also want to make sure we aren't in a b=b situation, so we compare addresses\
+		use the "this" key word\
+\
+safeArray& operator = (const SafeArray& other)\{\
+	if(this != &other)\{\
+		if(array!=NULL)\{\
+			delete [] array;\
+			array = NULL;\
+		\}\
+	\}\
+	\
+	size = other.size;\
+	array = new int[size];\
+	for(int i =0; i<size; i++)\{\
+		array[i] = other.array[i];\
+	\}\
+	return *this;\
+\}\
+\
+BIG THREE \
+Destructor			for free\
+CopyConstructor		for free shallow copy\
+=operator			for free shallow copy\
+\
+need these when you have dynamic memory allocation inside of the class\
+if you provide at least 1, you must provide the other 2 or you are fucking up\
+you can declare them as private if you want to restrict their use\
+\
+Recursion\
+something defined in terms of itself\
+\
+
+\b Nov 26 the night that okc put a beatdown on cha\
+
+\b0 STL - Standard Template Library\
+containers store the same objects\
+	one container is the vector\
+		can grow the container dynamically\
+		push_back()\
+		[ ]\
+		int size() const\
+		=\
+		capacity()		how much memory has been allocated\
+		reserve(int)\
+		resize(int)\
+		vector<int>(int, int)	two value constructor, first int is size, second is default value\
+		bool empty()\
+\
+#include <vector>\
+int main()\{\
+	vector<int> v;			//by default, vector is size zero\
+	vector<int> w = vector(10);		//has a size of ten\
+	/*cout<<v.size();			//prints out 0\
+	cout<<w.size()			//prints out 10\
+\
+	for(int i=0; i<w.size(); i++)\{\
+		w[i] = i;			//assigns values to the vector\
+	\}\
+	\
+	cout<<w[5];				//prints out 5\
+\
+	v.push_back(10);\
+	v.push_back(20);\
+	cout<<v.size();			//prints out 2\
+\
+	for(int i=0; i<v.size(); i++)\{\
+		cout<<v[i]<<" ";		//prints out 10 20\
+	\}\
+\
+	w = v;	*/				//w is now of size two and 10 and 20 are its elements\
+	v.reserve(200);\
+	\
+\}\
+\
+vector<char> v;\
+char c;\
+cout<<"input a letter or anything else to stop";\
+cin>>c\
+while(c >= 'a' && c <= 'z')\{\
+	v.push_back(c);\
+	cout<<"input a letter or anything else to stop;\
+	cin>>c;\
+\}\
+\
+vector<int> v2(26,0);\
+\
+for(int i=0; i<v.size(); i++)\{\
+	char letter = v[i];\
+	int index = letter - 'a';\
+	v[index] ++;\
+\}\
+\
+NOW BACK TO RECURSION\
+we need to keep track of what function called a particular function\
+	we need to know what function we are returning to in the code\
+		and what line of the code in the function we are returning to\
+\
+
+\b 28 nov - the day i went broker than broke\
+
+\b0 main()\{\
+	a();\
+\}\
+\
+a()\{\
+	a();\
+\}\
+\
+1. Base Case\
+	need at least one base case\
+	can have more than one\
+2. Recursive Step\
+	need at least one base case\
+	can have more than one\
+\
+n!\
+base case		0!=1\
+recursive step	n! = n*(n-1)!\
+\
+make sure n > 0\
+int factorial(int n)\{\
+	if(n==0)\{\
+		return 1;\
+	\}\
+	else\{\
+		return factorial(n-1);\
+	\}\
+\}\
+\
+directory problem\
+print out all of the files names inside all of the file names inside of the home directory\
+	its a tree\
+base case\
+	if file, print out file name\
+recursive step\
+	if directory, open up and print contents\
+\
+void printDirectoryTree(File file)\{\
+	if(file.getType() == plain)\{\
+		cout << file<<"\\n";\
+	\}\
+	else\{\
+		vector<File> files = file.getContents();\
+		for(int i=0; i<files.size(); I++)\{\
+			printDirectoryTree(files[i]);\
+		\}\
+	\}\
+\}\
+\
+and the second main boring recursive project\
+Fibonacci numbers\
+THIS IS AN AWFUL WAY TO DO THIS!\
+base case\
+	n=0 -> 0\
+	n=1 -> 1\
+\
+int fib(n)\{\
+	if(n==0 || n==1)\{\
+		return n;\
+	\}\
+	return fib(n-1)+(n-2);\
+\}\
+\
+this takes 2^n time!  wtf!\
+\
+given a number n = 123\
+output it vertically as \
+1\
+2\
+3\
+and vertically as\
+3\
+2\
+1\
+\
+
+\b 3 Dec\
+
+\b0 void printVertically(int n)\{\
+	if(n<0)\{\
+		cout<<"-\\n";\
+		printVertically(-n);\
+	\}\
+	else if(n<10)\{\
+		cout<<n<<"\\n";\
+	\}\
+	else\{\
+		printVertically(n/10);\
+		cout<<n%n<<"\\n";\
+	\}\
+\}\
+\
+a function that accepts an array and its size\
+returns the sum of all the elements of the array\
+int sum(int* a, int size)\{\
+	if(size == 0)\{\
+		return 0;\
+	\}\
+	return sum(a, size-1) + a[size-1];\
+	//return a[0] + sum(a+1, size-1);\
+\}\
+\
+finds maximum element in the array\
+int max(int*a, int size)\{\
+	if(size == 0)\{\
+		cout<<"ERROR"<<"\\n";\
+		exit(1);\
+	\}\
+	\
+	if(size == 1)\{\
+		return a[0];\
+	\}\
+	\
+	int m = max(a, size-1);\
+	if(m>a[size-1])\{\
+		return m;\
+	\}\
+	\
+	return a[size-1];\
+	\
+\}\
+\
+finds the average value of an array\
+int average(int* a, int size)\{\
+	//think about it\
+\}\
+\
+vector<int> copy(int* a, int size)\{\
+	if(size == 0)\{\
+		vector<int> v;\
+		return v;\
+	\}\
+	vector<int> v = copy(a, size-1);\
+	copy.push_back(a[size-1]);\
+	return v;\
+\}\
+\
+void reverse(int* array, int size)\{\
+	if(size>1)\{\
+		reverse(a+1, size-2);\
+		int temp = a[0];\
+		a[0] = a[size-1];\
+		a[size-1] = temp;\
+	\}\
+\}\
+\
+vector<int> copy(vector<int> v)\{\
+	if(v.size()==0)\{\
+		vector<int> q;\
+		return q;\
+	\}\
+\
+	int last = v[v.size()-1];\
+	v.resize(v.size()-1);\
+	vector<int> r = copy(v);\
+	r.push_back(last);\
+	return r;\
+\}\
+\
+vector<int> filterEven(vector<int> v)\{\
+	if(v.size()==0)\{\
+		vector<int> r;\
+		return r;\
+	\}\
+\
+	int last = v[v.size()-1];\
+	v.resize(v.size()-1);\
+	vector<int> r = filterEven(v);\
+	if(last%2==0)\{\
+		r.push_back(last);\
+	\}\
+	return r;\
+\}\
+\
+int addSubtract(vector<int> v)\{\
+	if(v.size() == 1)\{\
+		return v[0];\
+	\}\
+	\
+	int last = v[v.size()-1];\
+	v.resize(v.size()-1);\
+\
+	if(v.size%2==0)\{\
+		return -last + addSubtract(v);\
+	\}\
+	\
+	return last + addSubtract(v);\
+\}\
+\
+
+\b 5 December\
+
+\b0 Inheritance\
+"is a"\
+	inheritence\
+	student is a person\
+"has a"\
+	composition & aggregation\
+	table has a tabletop\
+\
+\
+class Person\{\
+	private:					//make the "private" fields "protected" so children of this class can access them\
+		name: string\
+		ssn: string\
+	\
+	public:\
+		Person() : name(""), ssn("")\{\
+			//empty\
+		\}\
+		Person(string n, string s) : name(n), ssn(s)\{\
+			//empty\
+		\}\
+		string getName() const\{\
+			return name;\
+		\}\
+		string getSSN() const\{\
+			return ssn;\
+		\}\
+		void output() const\{\
+			cout << "Name: " <<  name << endl;\
+			cout << "SSN: " << sen << endl;\
+		\}\
+\};\
+\
+class Student : public Person\{\
+	private:\
+		double gpa;\
+	public:\
+		Student() : gpa(0)\{\
+			//empty\
+		\}\
+\
+		Student(string n, string ssn, double g) : Person(n, s), gpa(g)\{\
+			//empty\
+		\}\
+\
+		double.getGPA()\{\
+			return gap;\
+		\}\
+\
+		void output() const\{\
+			cout<<"Name: " << getName() <<endl;\
+			cout<<"SSN: " << getSSN() <<endl;\
+			cout<<"GPA: " << gpa <<endl;\
+		\}\
+\};\
+\
+Student s("Abby", "22342359", 3.1);\
+s.output;		//output from the student class\
+s.Person::output();	//output from the person class\
+\
+Person p;\
+p=s;\
+p.output();		//will work\
+p.gpa = 3;		//won't work, gpa gets sliced out\
+\
+you can promote a pointer to a more general pointer\
+	"upcast" the pointer\
+\
+you can downcast with a pointer to a more specific pointer\
+	only if the pointer was already pointing to it\
+\
+class Student : public Person\{\
+	private:\
+		double gpa;\
+	public:\
+		Student() : gpa(0)\{\
+			//empty\
+		\}\
+\
+		Student(string n, string ssn, double g) : Person(n, s), gpa(g)\{\
+			//empty\
+		\}\
+\
+		double.getGPA()\{\
+			return gap;\
+		\}\
+\
+		
+\b virtual 
+\b0 void output() const\{					//makes the output function virtual (\
+			cout<<"Name: " << getName() <<endl;		//if we do this in the parent we don't need to do this in the child\
+			cout<<"SSN: " << getSSN() <<endl;		//but its aesthetically appealing\
+			cout<<"GPA: " << gpa <<endl;\
+		\}\
+\};\
+\
+int main()\
+\{\
+	Student* sp = new Student("ab", "124", 203);\
+	Person* pp = sp;\
+	pp->output();						//does the student output (because this guy is now a virtual function)\
+\}\
+\
+
+\b 10 december 2012 : holy homework hell\
+
+\b0 base		person		parent (super)\
+		    ^\
+derived	student		child (sub)\
+\
+class A\{\
+	public:\
+		A()\{\
+			cout<< "A()"<<endl;\
+		\}\
+\};\
+class B : public A\{\
+	public:\
+		B()\{\
+			cout<<"B()"<<endl;\
+		\}\
+\};\
+class C : public B\{\
+	public:\
+		C()\{\
+			cout<<"C()"<<endl;\
+		\}\
+\};\
+\
+int main()\{\
+	\
+	return 0;\
+\}\
+\
+dynamic binding - name of a function is bound to the type during the run time \
+	as opposed to static binding which happens during the compile time\
+\
+
+\b 12 december 2012 woohoo
+\b0 \
+class Base\{\
+	public :\
+		 Base(const Base& other)\{\
+			//sum stuff\
+		\}\
+		Base& operator =(const Base& other)\{	\
+			//check\
+			//sum stuff\
+		\}\
+		~Base()\{\
+			//sum stuff\
+		\}\
+\}\
+\
+class Derived : public Base\{\
+	public : \
+		Derived(const Derived& other) : Base(other)\{		//we slice when we upcast other, but who cares?\
+			//sum stuff\
+		\}\
+		Derived& operator =(const Derived& other)\{\
+			//check \
+			Base::operator=(other);\
+			//sum stuff\
+		\}\
+		~Derived()\{\
+			//sum stuff\
+			//note that it doesn't include ~Base()\
+			//thats called implicitly\
+		\}\
+\}\
+\
+late binding (aka dynamic binding)- you bind the definition to the function name at the run time, not the compile time\
+	these are created with the key word virtual\
+\
+circle* c = Circle(5);		//creates a circle of radius 5\
+c->getName();\
+c->getRadius();\
+c->getSide();\
+s->area();\
+s->draw();\
+\
+Square* s = new Square(5);\
+s->getName();\
+s->getSide();\
+s->area();\
+s->draw();\
+\
+Shape* sp;\
+sp=c;\
+sp->getName();		//will return circle\
+sp->getRadius();		//will not work because radius is not an element of the shape\
+sp->area();			//will return the area of the circle, since the function is virtual\
+				//--THIS IS WHAT WE CALL POLYMORPHISM--//\
+sp->getRadius();		//this won't work because shape does not have a get side\
+((circle*)sp->getRadius();	//works\
+((Square*)sp)->getSide();	//won't\
+\
+Shape sp;			//won't work because shape is abstract\
+sp = new Shape();		//same thing as ^\
+\
+if there are virtual methods in the parent, and the child does not override all of them the child is also abstract\
+\
+\
+
+\b REVIEW FOR THE FINAL\
+
+\b0 for the homework i'm going to need the getline function\
+	getline(myReaderFile, s, '|'); }
